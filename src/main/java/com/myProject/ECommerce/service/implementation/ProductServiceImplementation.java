@@ -3,9 +3,11 @@ package com.myProject.ECommerce.service.implementation;
 import com.myProject.ECommerce.entity.Product;
 import com.myProject.ECommerce.exception.ProductException;
 import com.myProject.ECommerce.service.ProductService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProductServiceImplementation implements ProductService {
 
     @Override
