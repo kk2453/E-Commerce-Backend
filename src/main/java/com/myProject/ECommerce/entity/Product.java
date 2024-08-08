@@ -1,10 +1,7 @@
 package com.myProject.ECommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 public class Product {
     @Id
@@ -30,7 +28,7 @@ public class Product {
 
     private int discountedPrice;
 
-    private int discountPersent;
+    private int discountPercent;
     @Column(name = "quantity")
     private int quantity;
     @Column(name = "brand")
