@@ -29,6 +29,7 @@ public class Order {
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
     private LocalDateTime orderDate;
+    private String orderStatus;
     private LocalDateTime deliveryDate;
     @OneToOne
     private Address shippingAddress;
