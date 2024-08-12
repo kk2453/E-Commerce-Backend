@@ -1,0 +1,50 @@
+package com.myProject.ECommerce.service.implementation;
+
+import com.myProject.ECommerce.entity.Cart;
+import com.myProject.ECommerce.entity.CartItem;
+import com.myProject.ECommerce.entity.Product;
+import com.myProject.ECommerce.exception.CartItemException;
+import com.myProject.ECommerce.exception.UserException;
+import com.myProject.ECommerce.repository.CartItemRepository;
+import com.myProject.ECommerce.repository.CartRepository;
+import com.myProject.ECommerce.service.CartItemService;
+import com.myProject.ECommerce.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CartItemServiceImplementation implements CartItemService {
+
+    @Autowired
+    private CartRepository cartRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CartItemRepository cartItemRepository;
+
+
+    @Override
+    public CartItem createCartItem(CartItem cartItem) {
+        return null;
+    }
+
+    @Override
+    public CartItem updateCartItem(Long userId, Long id, CartItem cartItem) throws CartItemException, UserException {
+        return null;
+    }
+
+    @Override
+    public CartItem isCartItemExist(Cart cart, Product product, String size, Long userId) {
+        return null;
+    }
+
+    @Override
+    public String removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException {
+        return "Item removed from cart";
+    }
+
+    @Override
+    public CartItem findCartItemById(Long cartItemId) throws CartItemException {
+        return null;
+    }
+}
