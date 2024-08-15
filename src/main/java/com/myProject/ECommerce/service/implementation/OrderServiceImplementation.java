@@ -5,6 +5,7 @@ import com.myProject.ECommerce.entity.Order;
 import com.myProject.ECommerce.entity.User;
 import com.myProject.ECommerce.exception.OrderException;
 import com.myProject.ECommerce.repository.CartRepository;
+import com.myProject.ECommerce.repository.OrderRepository;
 import com.myProject.ECommerce.service.CartItemService;
 import com.myProject.ECommerce.service.OrderService;
 import com.myProject.ECommerce.service.ProductService;
@@ -16,6 +17,8 @@ import java.util.List;
 @Service
 public class OrderServiceImplementation implements OrderService {
 
+    @Autowired
+    private OrderRepository orderRepository;
     @Autowired
     private CartRepository cartRepository;
     @Autowired
