@@ -23,4 +23,5 @@ public class CartItem {
     private int quantity;
     private Integer price;
     private Integer discountedPrice;
+    private Long userId;
 }

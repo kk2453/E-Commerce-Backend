@@ -3,6 +3,7 @@ package com.myProject.ECommerce.service.implementation;
 import com.myProject.ECommerce.entity.Cart;
 import com.myProject.ECommerce.entity.CartItem;
 import com.myProject.ECommerce.entity.Product;
+import com.myProject.ECommerce.entity.User;
 import com.myProject.ECommerce.exception.CartItemException;
 import com.myProject.ECommerce.exception.UserException;
 import com.myProject.ECommerce.repository.CartItemRepository;
@@ -24,12 +25,18 @@ public class CartItemServiceImplementation implements CartItemService {
 
 
     @Override
-    public CartItem createCartItem(CartItem cartItem) {
-        return null;
+    public CartItem createCartItem(CartItem cartItem){
+        cartItem.setQuantity(1);
+        cartItem.setPrice(Integer.parseInt(cartItem.getProduct().getPrice())*cartItem.getQuantity());
+        cartItem.setDiscountedPrice(cartItem.getProduct().getDiscountedPrice()*cartItem.getQuantity());
+        return cartItemRepository.save(cartItem);
     }
 
     @Override
     public CartItem updateCartItem(Long userId, Long id, CartItem cartItem) throws CartItemException, UserException {
+        CartItem item =findCartItemById(id);
+        User user = userService.findUserById(item.getUserId());
+
         return null;
     }
 
