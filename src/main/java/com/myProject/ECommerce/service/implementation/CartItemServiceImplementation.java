@@ -36,8 +36,12 @@ public class CartItemServiceImplementation implements CartItemService {
     public CartItem updateCartItem(Long userId, Long id, CartItem cartItem) throws CartItemException, UserException {
         CartItem item =findCartItemById(id);
         User user = userService.findUserById(item.getUserId());
-
-        return null;
+        if(user.getId().equals(userId)){
+            item.setQuantity(cartItem.getQuantity());
+            item.setPrice(Integer.valueOf(cartItem.getProduct().getPrice()));
+            item.setDiscountedPrice(cartItem.getDiscountedPrice()*item.getQuantity());
+        }
+        return cartItemRepository.save(item);
     }
 
     @Override
