@@ -52,14 +52,13 @@ public class AuthController {
                 .build();
         User savedUser = userRepository.save(createdUser);
 
-        Authentication authenticaton = new UsernamePasswordAuthenticationToken(savedUser.getEmail(),savedUser.getPassword());
-        SecurityContextHolder.getContext().setAuthentication(authenticaton);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(),savedUser.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtProvider.generateToken(authenticaton);
+        String token = jwtProvider.generateToken(authentication);
         AuthResponse authResponse = new AuthResponse(token,"Signed up successfully");
 
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
-
     }
 
     @PostMapping("/login")
