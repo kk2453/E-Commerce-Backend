@@ -7,6 +7,8 @@ import com.myProject.ECommerce.repository.UserRepository;
 import com.myProject.ECommerce.request.LoginRequest;
 import com.myProject.ECommerce.response.AuthResponse;
 import com.myProject.ECommerce.service.implementation.CustomUserServiceImplementation;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,37 +22,33 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@AllArgsConstructor
+//when using all args constructor, you dont have to write @autowired above each dependency.
 public class AuthController {
 
-    @Autowired
+
     private UserRepository userRepository;
-    @Autowired
     private JwtProvider jwtProvider;
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private CustomUserServiceImplementation customUserServiceImplementation;
+    //inject here
+    private ModelMapper modelMapper;
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws UserException{
-        String email = user.getEmail();
-        String password = user.getPassword();
-        String firstName = user.getFirstName();
-        String lastName = user.getLastName();
+        //IF YOU HAD A DTO consider using model mapper as it saves a lot of time. here are steps on how to use it
+        //it will basically automatically map all the fields from you request body to the actual copy you are going to save
+        // you will need to inject it in maven first and then create a bean in your ECommerceApplication class
 
-
-        User isEmailExist = userRepository.findByEmail(email);
+        User isEmailExist = userRepository.findByEmail(user.getEmail());
         if(isEmailExist!=null){
             throw new UserException("email is already in use with another account");
         }
 
-        User createdUser = User.builder()
-                .email(email)
-                .password(passwordEncoder.encode(password))
-                .firstName(firstName)
-                .lastName(lastName)
-                .build();
-        User savedUser = userRepository.save(createdUser);
+//        User savedUser = modelMapper.map(user, User.class);
+
+        User savedUser = userRepository.save(user);
+        //Because you dont have a DTO you can straight up save it
 
         Authentication authenticaton = new UsernamePasswordAuthenticationToken(savedUser.getEmail(),savedUser.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authenticaton);
