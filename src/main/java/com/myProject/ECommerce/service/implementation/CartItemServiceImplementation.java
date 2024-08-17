@@ -13,6 +13,8 @@ import com.myProject.ECommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CartItemServiceImplementation implements CartItemService {
 
@@ -46,17 +48,29 @@ public class CartItemServiceImplementation implements CartItemService {
 
     @Override
     public CartItem isCartItemExist(Cart cart, Product product, String size, Long userId) {
-
-        return null;
+        return cartItemRepository.isCartItemExist(cart, product, size, userId);
     }
 
     @Override
-    public String removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException {
-        return "Item removed from cart";
+    public void removeCartItem(Long userId, Long cartItemId) throws CartItemException, UserException {
+        CartItem cartItem =findCartItemById(cartItemId);
+        User user = userService.findUserById(cartItem.getUserId());
+        User requestUser = userService.findUserById(userId);
+        if(requestUser.getId().equals(user.getId())){
+            cartItemRepository.deleteById(cartItemId);
+        }
+        else {
+            throw new UserException("You cannot remove another users items");
+        }
     }
 
     @Override
     public CartItem findCartItemById(Long cartItemId) throws CartItemException {
-        return null;
+        Optional<CartItem> optional = cartItemRepository.findById(cartItemId);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        throw new CartItemException("Cart item not found with id: "+cartItemId);
     }
+
 }
