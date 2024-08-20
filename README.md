@@ -1,5 +1,3 @@
 #E-Com backend using spring boot
 <br>
-this is personal project using all i learned about java spring boot
-<br>
-using postgres as the database, and testing the api using postman
+implementing jwt security, using postgres as the database(create-drop and format), and testing the api using postman
